@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const generateUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -39,7 +40,7 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then(user => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' })
+      const token = jwt.sign({ _id: user._id },NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'); /*for development(without ".env" file) takes default value*/
       res.send({ token });
     })
     .catch(next);
