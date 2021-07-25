@@ -2,6 +2,13 @@ const Movie = require('../models/movie')
 const NotFoundError = require('../errors/not-found')
 const AccessFailureError = require('../errors/access-failure')
 
+const getMovies = (req, res, next) => {
+    Movie.find({})
+        .populate('owner')
+        .then(movies => res.send({ data: movies }))
+        .catch(next);
+}
+
 const generateMovie = (req, res, next) => {
     const { country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId } = req.body
     Movie.create({ country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId })
@@ -25,5 +32,6 @@ const deleteMovie = (req, res, next) => {
 
 module.exports = {
     generateMovie,
-    deleteMovie
+    deleteMovie,
+    getMovies
 }
