@@ -25,14 +25,14 @@ mongoose.connect(NODE_ENV === 'production' ? MONGO_SERVER_ADRESS : 'mongodb://lo
 
 app.use(bodyParser.json())
 
+// loggers --- requestLogger
+app.use(requestLogger);
+
 // security --- helmetModule 
 app.use(helmet());
 
 // security --- limiterModule
 app.use(limiter);
-
-// loggers --- requestLogger
-app.use(requestLogger);
 
 // routes
 app.post('/signup', routeValidator.validate({

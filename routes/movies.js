@@ -9,7 +9,7 @@ router.post('/', routeValidator.validate({
         director: { isRequired: true },
         duration: { isRequired: true, isNumeric: true },
         year: { isRequired: true },
-        discription: { isRequired: true },
+        description: { isRequired: true },
         image: { isRequired: true, isURL: { require_protocol: false } },
         trailer: { isRequired: true, isURL: { require_protocol: false } },
         thumbnail: { isRequired: true, isURL: { require_protocol: false } },

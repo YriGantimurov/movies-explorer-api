@@ -11,7 +11,7 @@ const getMovies = (req, res, next) => {
 
 const generateMovie = (req, res, next) => {
     const { country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId } = req.body
-    Movie.create({ country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId })
+    Movie.create({ country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId, owner: req.user._id  })
         .then((movie) => {
             res.send({ data: movie })
         })
