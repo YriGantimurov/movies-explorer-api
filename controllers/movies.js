@@ -1,6 +1,7 @@
 const Movie = require('../models/movie')
 const NotFoundError = require('../errors/not-found')
 const AccessFailureError = require('../errors/access-failure')
+const {errors} = require('../constants')
 
 const getMovies = (req, res, next) => {
     Movie.find({})
@@ -21,8 +22,8 @@ const generateMovie = (req, res, next) => {
 const deleteMovie = (req, res, next) => {
     Movie.findById(req.params.movieId)
         .then(movie => {
-            if (!movie) throw new NotFoundError('IdNotFound')
-            if (req.user._id !== movie.owner.toString()) { throw new AccessFailureError('AccessError') }
+            if (!movie) throw new NotFoundError(errors.IdNotFound)
+            if (req.user._id !== movie.owner.toString()) { throw new AccessFailureError(errors.AccessError) }
             Movie.findByIdAndRemove(req.params.cardId)
                 .then(deletedmovie => res.send({ data: deletedmovie }))
                 .catch(next)

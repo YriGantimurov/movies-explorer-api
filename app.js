@@ -14,9 +14,10 @@ const centralizedErrorHandler = require('./middlewares/centralizedErrorHandler')
 const NotFoundError = require('./errors/not-found');
 const {MONGO_SERVER_ADRESS, NODE_ENV} = process.env
 const {limiter} = require('./middlewares/limiterConf')
+const {errors, mongooseAdress} = require('./constants')
 
 // mongoDB --- mongoose connection
-mongoose.connect(NODE_ENV === 'production' ? MONGO_SERVER_ADRESS : 'mongodb://localhost:27017/moviesdb', { /*for development(without ".env" file) takes default value*/
+mongoose.connect(NODE_ENV === 'production' ? MONGO_SERVER_ADRESS : mongooseAdress, { /*for development(without ".env" file) takes default value*/
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -52,7 +53,7 @@ app.use(auth)
 app.use('/users', require('./routes/users'));
 app.use('/movies', require('./routes/movies'));
 app.use('*', () => {
-  throw new NotFoundError('PageNotFound')
+  throw new NotFoundError(errors.PageNotFound)
 });
 
 // loggers --- errorLogger

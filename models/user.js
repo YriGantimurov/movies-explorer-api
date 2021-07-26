@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 // eslint-disable-next-line no-unused-vars
 const validator = require('validator');
 const bcrypt = require('bcrypt');
-const WrongAuth = require('../errors/wrong-auth')
+const WrongAuthError = require('../errors/wrong-auth')
+const {errors} = require('../constants')
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -33,12 +34,12 @@ userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then(user => {
       if (!user) {
-        return Promise.reject(new WrongAuth('WrongEmailOrPassword'));
+        return Promise.reject(new WrongAuthError(errors.WrongEmailOrPassword));
       }
       return bcrypt.compare(password, user.password)
         .then(matched => {
           if (!matched) {
-            return Promise.reject(new WrongAuth('WrongEmailOrPassword'));
+            return Promise.reject(new WrongAuthError(errors.WrongEmailOrPassword));
           }
           return user;
         })
