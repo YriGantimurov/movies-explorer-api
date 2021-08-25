@@ -15,7 +15,7 @@ router.post('/', routeValidator.validate({
         thumbnail: { isRequired: true, isURL: { require_protocol: false } },
         movieId: { isRequired: true },
         nameRU: { isRequired: true },
-        nameEN: { isRequired: true },
+        nameEN: { isRequired: false },
     }
 }), generateMovie);
 router.delete('/:movieId', routeValidator.validate({

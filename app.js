@@ -15,6 +15,7 @@ const NotFoundError = require('./errors/not-found');
 const {MONGO_SERVER_ADRESS, NODE_ENV} = process.env
 const {limiter} = require('./middlewares/limiterConf')
 const {errors, mongooseAdress} = require('./constants')
+const cors = require('cors')
 
 // mongoDB --- mongoose connection
 mongoose.connect(NODE_ENV === 'production' ? MONGO_SERVER_ADRESS : mongooseAdress, { /*for development(without ".env" file) takes default value*/
@@ -34,6 +35,11 @@ app.use(helmet());
 
 // security --- limiterModule
 app.use(limiter);
+
+const corsOptions = {
+  origin: 'movie.explorer.nomoredomains.club',
+}
+app.use(cors(corsOptions))
 
 // routes
 app.post('/signup', routeValidator.validate({

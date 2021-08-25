@@ -24,7 +24,7 @@ const deleteMovie = (req, res, next) => {
         .then(movie => {
             if (!movie) throw new NotFoundError(errors.IdNotFound)
             if (req.user._id !== movie.owner.toString()) { throw new AccessFailureError(errors.AccessError) }
-            Movie.findByIdAndRemove(req.params.cardId)
+            Movie.findByIdAndRemove(req.params.movieId)
                 .then(deletedmovie => res.send({ data: deletedmovie }))
                 .catch(next)
         })

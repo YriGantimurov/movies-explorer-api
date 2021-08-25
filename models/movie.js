@@ -6,7 +6,6 @@ const validator = require('validator');
 const movieSchema = new mongoose.Schema({
     country: {
         type: String,
-        required: true,
     },
     director: {
         type: String,
@@ -69,7 +68,6 @@ const movieSchema = new mongoose.Schema({
     },
     nameEN: {
         type: String,
-        required: true,
     },
 
 })
