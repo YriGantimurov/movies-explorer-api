@@ -1,5 +1,5 @@
 // imports
-require('dotenv').config(); 
+require('dotenv').config();
 const express = require('express');
 var helmet = require('helmet');
 const { PORT = 3000 } = process.env;
@@ -12,9 +12,9 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routeValidator = require('express-route-validator');
 const centralizedErrorHandler = require('./middlewares/centralizedErrorHandler');
 const NotFoundError = require('./errors/not-found');
-const {MONGO_SERVER_ADRESS, NODE_ENV} = process.env
-const {limiter} = require('./middlewares/limiterConf')
-const {errors, mongooseAdress} = require('./constants')
+const { MONGO_SERVER_ADRESS, NODE_ENV } = process.env
+const { limiter } = require('./middlewares/limiterConf')
+const { errors, mongooseAdress } = require('./constants')
 const cors = require('cors')
 
 // mongoDB --- mongoose connection
@@ -37,7 +37,7 @@ app.use(helmet());
 app.use(limiter);
 
 const corsOptions = {
-  origin: 'movie.explorer.nomoredomains.club',
+  origin: ['https://movie.explorer.nomoredomains.club', 'http://movie.explorer.nomoredomains.club'],
 }
 app.use(cors(corsOptions))
 
@@ -49,7 +49,7 @@ app.post('/signup', routeValidator.validate({
     password: { isLength: { min: 8, max: 20 }, isRequired: true }
   }
 }), generateUser)
-app.post('/signin',routeValidator.validate({
+app.post('/signin', routeValidator.validate({
   body: {
     email: { isEmail: true, isRequired: true },
     password: { isLength: { min: 8, max: 20 }, isRequired: true }
