@@ -37,7 +37,7 @@ app.use(helmet());
 app.use(limiter);
 
 const corsOptions = {
-  origin: ['https://movie.explorer.nomoredomains.club', 'http://movie.explorer.nomoredomains.club', 'http://localhost:3000'],
+  origin: ['https://korneevmoviesexplorer.ru', 'http://korneevmoviesexplorer.ru'],
 }
 app.use(cors(corsOptions))
 
